@@ -10,8 +10,17 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
-      - name: Build ipa with adhoc/debug signing
+      - name: Build iOS Archive
         script: |
-          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+          flutter build ios --release --no-codesign
+      - name: Package IPA manually
+        script: |
+          mkdir -p build/ios/ipa
+          cd build/ios/iphoneos
+          mkdir Payload
+          cd Payload
+          cp -r ../Runner.app .
+          zip -r ../../ipa/reps_app.ipa Payload
+          cd ../../../
     artifacts:
       - build/ios/ipa/*.ipa
