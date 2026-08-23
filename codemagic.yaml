@@ -2,7 +2,7 @@ workflows:
   ios-release:
     name: iOS Release Build
     max_build_duration: 120
-    instance_type: mac_mini_m1
+    instance_type: mac_mini_m2
     environment:
       flutter: stable
       xcode: latest
@@ -10,8 +10,8 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
-      - name: Build ipa
+      - name: Build app bundle or debug
         script: |
-          flutter build ipa --release --no-codesign
+          flutter build ios --release --no-codesign
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/ios/iphoneos/**
