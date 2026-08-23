@@ -13,14 +13,12 @@ workflows:
       - name: Build iOS Archive
         script: |
           flutter build ios --release --no-codesign
-      - name: Package IPA manually
+      - name: Create IPA from App
         script: |
           mkdir -p build/ios/ipa
           cd build/ios/iphoneos
-          mkdir Payload
-          cd Payload
-          cp -r ../Runner.app .
-          zip -r ../../ipa/reps_app.ipa Payload
-          cd ../../../
+          mkdir -p Payload
+          cp -R Runner.app Payload/
+          zip -r ../ipa/reps_app.ipa Payload
     artifacts:
       - build/ios/ipa/*.ipa
