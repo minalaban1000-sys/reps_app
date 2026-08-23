@@ -1,6 +1,6 @@
 workflows:
-  ios-release:
-    name: iOS Release Build
+  ios-ipa-release:
+    name: iOS IPA Build
     max_build_duration: 120
     instance_type: mac_mini_m2
     environment:
@@ -10,8 +10,8 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
-      - name: Build app bundle or debug
+      - name: Build ipa with adhoc/debug signing
         script: |
-          flutter build ios --release --no-codesign
+          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
     artifacts:
-      - build/ios/iphoneos/**
+      - build/ios/ipa/*.ipa
